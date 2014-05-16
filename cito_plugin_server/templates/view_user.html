@@ -1,0 +1,58 @@
+{% include "header.html" %}
+{%  include 'top_nav_bar.html' %}
+    {% include 'noscript.html' %}
+
+<div class="container-fluid">
+
+
+    <div class="box span12"><!--user info -->
+                        <div class="box-header well">
+                            <h2><i class="icon-info-sign"></i>User Details</h2>
+                        </div>
+                        <div class="box-content">
+                                    <table class="table" width="100%">
+                                          <tr>
+                                            <td width="7%"><div ><strong>Name</strong></div></td>
+                                            <td width="12%">{{ view_user.get_full_name }}</td>
+                                            <td width="10%"><strong>Username</strong></td>
+                                            <td width="71%">{{ view_user.username }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td><div><strong>Status</strong></div></td>
+                                            <td>{% if view_user.is_active %} Active {% else %} Inactive {% endif %}</td>
+                                            <td><strong>Email</strong></td>
+                                            <td>{{ view_user.email }}</td>
+                                          </tr>
+                                          <tr>
+                                              <td>API Keys:</td>
+                                              <td colspan="4">
+                                              <ul>
+                                                  {% for apikey in apikeys %}
+                                                      <li><a href="/apikeys/edit/{{ apikey.id }}">{{ apikey.name }}</a></li>
+                                                  {% endfor %}
+                                              </ul>
+                                              </td>
+                                          </tr>
+                                    </table>
+
+                                                             <form method="post" action="/users/toggle/" accept-charset="."> {% csrf_token %}
+                                                                    <input type="hidden" name="user_id" value="{{ view_user.id }}">
+                                                                {% if view_user.is_active %}
+                                                                    <input type="hidden" name="user_status" value="disable_user">
+                                                                    <input type="submit" class="btn btn-info" value="Disable User" name="toggle_submit">
+                                                                {% else %}
+                                                                    <input type="hidden" name="user_status" value="enable_user">
+                                                                    <input type="submit" class="btn btn-info" value="Enable User" name="toggle_submit">
+                                                                {% endif %}
+                                                             </form>
+
+
+                    </div>
+
+    </div> <!--user info -->
+</div> <!-- container -->
+
+
+
+
+{% include 'footer.html' %}

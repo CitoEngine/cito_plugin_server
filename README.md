@@ -1,4 +1,6 @@
 cito_plugin_server
 ==================
 
-CitoEngine's Plugin Server
+## Overview
+
+This is preview release of CitoEngine's Plugin Server, for installation information please refer to (http://citoengine.readthedocs.org)
