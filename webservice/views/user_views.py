@@ -57,6 +57,35 @@ def create_user(request):
     render_vars['form'] = form
     return render_to_response('generic_form.html', render_vars, context_instance=RequestContext(request))
 
+@login_required(login_url='/login/')
+def edit_user(request, user_id):
+    render_vars = dict()
+    user = get_object_or_404(User, pk=user_id)
+    if not request.user.is_superuser:
+        return render_to_response('unauthorized.html', context_instance=RequestContext(request))
+    if request.method == "POST":
+        form = user_forms.EditUserForm(request.POST)
+        if form.is_valid():
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.username = form.cleaned_data.get('username')
+            user.email = form.cleaned_data.get('email')
+            user.save()
+            password = form.cleaned_data.get('password1')
+            if password:
+                user.set_password(password)
+                user.save()
+            return redirect('/users/view/%s/' % user.id)
+    else:
+        form_vars = {'first_name': user.first_name,
+                     'last_name': user.last_name,
+                     'email': user.email,
+                     'username': user.username}
+        form = user_forms.EditUserForm(initial=form_vars)
+    render_vars['form'] = form
+    render_vars['page_title'] = render_vars['box_title'] = 'Editing user: %s ' % user.username
+    return render_to_response('generic_form.html', render_vars, context_instance=RequestContext(request))
+
 
 @login_required(login_url='/login/')
 def toggle_user(request):
