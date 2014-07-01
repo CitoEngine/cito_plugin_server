@@ -43,3 +43,27 @@ class UserCreationForm(forms.Form):
             self._errors["password1"] = self.error_class([msg])
             self._errors["password2"] = self.error_class([msg])
         return cleaned_data
+
+
+class EditUserForm(forms.Form):
+    first_name = forms.CharField(label='First name', max_length=100)
+    last_name = forms.CharField(label='Last name', max_length=100)
+    username = forms.CharField(max_length=100)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=False)
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput, required=False)
+    email = forms.EmailField()
+
+    def __init__(self, *args, **kwargs):
+        super(EditUserForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].help_text = "Leave blank if you dont want to change it"
+
+    def clean(self):
+        cleaned_data = super(EditUserForm, self).clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+
+        if password1 and password2 and password1 != password2:
+            msg = u"The passwords did not match. Please try again."
+            self._errors["password1"] = self.error_class([msg])
+            self._errors["password2"] = self.error_class([msg])
+        return cleaned_data

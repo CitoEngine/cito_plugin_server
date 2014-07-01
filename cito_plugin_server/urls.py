@@ -29,7 +29,7 @@ urlpatterns = patterns('',
                        )
 
 urlpatterns += patterns('',
-                        url(r'^$', 'webservice.views.auth_views.login_user'),
+                        url(r'^$', 'webservice.views.plugin_views.view_all_plugins'),
                         url(r'^login/$', 'webservice.views.auth_views.login_user'),
                         url(r'^logout/$', 'webservice.views.auth_views.logout_user'),
                         )
@@ -49,8 +49,9 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
                         url(r'^users/$', 'webservice.views.user_views.view_all_users'),
                         url(r'^users/create/$', 'webservice.views.user_views.create_user'),
+                        url(r'^users/edit/(?P<user_id>\d+)/$', 'webservice.views.user_views.edit_user'),
                         url(r'^users/toggle/$', 'webservice.views.user_views.toggle_user'),
-                        url(r'^users/view/(?P<user_id>\d+)$', 'webservice.views.user_views.view_single_user'),
+                        url(r'^users/view/(?P<user_id>\d+)/$', 'webservice.views.user_views.view_single_user'),
                         )
 
 urlpatterns += patterns('',
