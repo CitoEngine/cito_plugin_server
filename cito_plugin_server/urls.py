@@ -29,7 +29,7 @@ urlpatterns = patterns('',
                        )
 
 urlpatterns += patterns('',
-                        url(r'^$', 'webservice.views.auth_views.login_user'),
+                        url(r'^$', 'webservice.views.plugin_views.view_all_plugins'),
                         url(r'^login/$', 'webservice.views.auth_views.login_user'),
                         url(r'^logout/$', 'webservice.views.auth_views.logout_user'),
                         )
