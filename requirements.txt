@@ -6,7 +6,7 @@ anyjson==0.3.3
 argparse==1.2.1
 billiard==2.7.3.31
 coverage==3.5.2
-distribute==0.6.45
+distribute==0.7.3
 django-tastypie==0.9.15
 django-nose==1.2
 factory-boy==2.3.1
