@@ -24,8 +24,9 @@ source /opt/virtualenvs/citopluginvenv/bin/activate
 
 test -d $LOGDIR || mkdir -p $LOGDIR
 
-python manage.py run_gunicorn \
-	--workers $NUM_WORKERS \
-	--user=$USER --group=$GROUP \
-	--log-level=debug --log-file=$LOGFILE 2>>$LOGFILE --bind $BIND_IP
-
+# This is the workaround command for starting the app if run_gunicorn fails
+gunicorn --workers=$NUM_WORKERS \
+         --user $USER \
+         --group $GROUP \
+         --log-level=debug --log-file=$LOGFILE 2>>$LOGFILE --bind $BIND_IP \
+         cito_plugin_server.wsgi

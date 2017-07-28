@@ -11,5 +11,5 @@ fi
 
 echo "Configuring cito-plugin-server.."
 ln -sf /lib/init/upstart-job /etc/init.d/cito-plugin-server
-cp /opt/cito/bin/upstart/cito-plugin-server.conf /etc/init/
+cp /opt/cito_plugin_server/bin/upstart/cito-plugin-server.conf /etc/init/
 /usr/sbin/update-rc.d cito-plugin-server defaults
